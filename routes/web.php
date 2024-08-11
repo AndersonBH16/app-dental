@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect('/login');
+})->middleware([
+//    \App\Http\Middleware\DisablePreventBack::class,
+]);
 
 Route::middleware([
+//    \App\Http\Middleware\DisablePreventBack::class,
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
