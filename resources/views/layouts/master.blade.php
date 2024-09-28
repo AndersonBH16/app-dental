@@ -38,7 +38,13 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-        @yield('content')
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="main-content">
+                <div class="page-content">
+                @yield('content')
+                </div>
+            </div>
+        </div>
         <!-- end main content-->
 
     </div>
