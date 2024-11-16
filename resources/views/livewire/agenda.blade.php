@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('styles')
+
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <!-- start page title -->
@@ -16,11 +20,15 @@
                 </div>
             </div>
         </div>
-        <div class="card border border-info">
+        <div class="card border">
             <h5 class="card-header">Cronograma de Consultas</h5>
             <div class="card-body">
 
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+
 @endsection
