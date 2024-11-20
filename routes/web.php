@@ -1,13 +1,20 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProformasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/login');
 })->middleware([
 //    \App\Http\Middleware\DisablePreventBack::class,
+]);
+
+Route::resources([
+    'categorias' => CategoriaController::class,
+    'productos' => ProformasController::class,
 ]);
 
 Route::middleware([
