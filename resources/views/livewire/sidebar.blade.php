@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('agenda.view') }}" class=" waves-effect">
+                    <a href="{{ route('ver-citas') }}" class=" waves-effect">
                         <i class="ri-calendar-2-line"></i>
                         <span>Agenda</span>
                     </a>

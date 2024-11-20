@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo');
+            $table->string('descripcion');
+            $table->date('fecha');
+            $table->time('hora_inicio')->unique();
+            $table->time('hora_fin')->unique();
+            $table->unsignedBigInteger('paciente_id');
+            $table->enum('estado', ['pendiente', 'en proceso', 'terminado', 'cancelado'])->default('pendiente');
             $table->timestamps();
+
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
         });
     }
 

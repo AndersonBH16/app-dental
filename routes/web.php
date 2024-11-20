@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\HomeController;
-use App\Livewire\Agenda;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,5 +20,6 @@ Route::middleware([
 //        return view('dashboard');
 //    })->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/agenda', [Agenda::class, 'render'])->name('agenda.view');
+    Route::get('/citas', [CitaController::class, 'index'])->name('ver-citas');
+    Route::get('/ver-citas', [CitaController::class, 'getAllCitas']);
 });

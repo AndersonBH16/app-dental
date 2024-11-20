@@ -12,7 +12,12 @@ class CitaController extends Controller
      */
     public function index()
     {
-        //
+        return view('citas.index');
+    }
+
+    public function getAllCitas(){
+        $citas = Cita::all();
+        return $citas;
     }
 
     /**

@@ -21,7 +21,9 @@
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
-    @yield('styles')
+    <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/core/main.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.css') }}" />
     @livewireStyles
 </head>
 <body data-topbar="dark">
@@ -65,8 +67,13 @@
     <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
 
+    <script src="{{ asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>
+
     <!-- apexcharts -->
-    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+{{--    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>--}}
 
     <!-- jquery.vectormap map -->
     <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
@@ -75,8 +82,6 @@
     <!-- Required datatable js -->
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-
-    <!-- Responsive examples -->
     <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
@@ -85,6 +90,7 @@
     <!-- App js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
-    @yield('scripts')
+    @stack('styles')
+    @stack('scripts')
 </body>
 </html>
