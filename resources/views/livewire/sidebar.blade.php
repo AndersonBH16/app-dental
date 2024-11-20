@@ -47,8 +47,8 @@
                         <span>Inventario</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="email-inbox.html"><i class="fas fa-square"></i>Categorías</a></li>
-                        <li><a href="email-read.html"><i class="fas fa-box"></i>Productos</a></li>
+                        <li><a href="/categorias"><i class="fas fa-square"></i>Categorías</a></li>
+                        <li><a href="/productos"><i class="fas fa-box"></i>Productos</a></li>
                     </ul>
                 </li>
                 <li>
