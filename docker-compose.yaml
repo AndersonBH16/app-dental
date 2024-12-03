@@ -31,7 +31,7 @@ services:
     restart: on-failure
     container_name: app-dental-db
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - ./db_data:/var/lib/mysql
     environment:
