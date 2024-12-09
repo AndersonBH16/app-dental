@@ -3,7 +3,8 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProformasController;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +15,8 @@ Route::get('/', function () {
 
 Route::resources([
     'categorias' => CategoriaController::class,
-    'productos' => ProformasController::class,
+    'productos' => ProductoController::class,
+    'pacientes' => PacienteController::class,
 ]);
 
 Route::middleware([

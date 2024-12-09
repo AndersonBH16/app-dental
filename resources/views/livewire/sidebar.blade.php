@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class=" waves-effect">
+                    <a href="/pacientes" class=" waves-effect">
                         <i class="ri-group-line"></i>
                         <span>Pacientes</span>
                     </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PacientesDataTable;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class PacienteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PacientesDataTable $dataTables)
     {
-        //
+        return $dataTables->render('pacientes.index');
     }
 
     /**

@@ -30,7 +30,7 @@
     </div>
 @endsection
 
-@push('js')
+@push('scripts')
     @vite('resources/js/app.js')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     <!-- Required datatable js -->
@@ -50,8 +50,8 @@
 {{--    <script src="{{ asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>--}}
 @endpush
 
-@push('css')
-    @vite(['resources/css/app.css', 'resources/sass/app.scss'])
+@push('styles')
+{{--    @vite(['resources/css/app.css', 'resources/sass/app.scss'])--}}
     <!-- DataTables -->
     {{--<link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />--}}
     {{--<!-- Responsive datatable examples -->--}}
