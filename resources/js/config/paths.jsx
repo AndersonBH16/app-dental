@@ -1,2 +1,2 @@
 export const ODONTOGRAM = "/odontograma";
-export const ODONTOGRAMS = "/odontograms";
+export const ODONTOGRAMS = "/odontogramas";

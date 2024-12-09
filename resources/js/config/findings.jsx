@@ -44,7 +44,7 @@ export const ITEMS = [
     },
     {
         value: 4,
-        name: 'FRACTURA',
+        name: ' FRACTURA',
         colorFindingType: 'red',
         description: "Marque 2 veces sobre la pieza dentaria para dibujar una línea que represente la fractura de la corona y/o raíz según sea el caso:",
         draw: {},

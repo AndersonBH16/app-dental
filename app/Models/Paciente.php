@@ -22,6 +22,6 @@ class Paciente extends Model
 
     public function odontograms()
     {
-        return $this->hasMany(Odontogram::class, 'patient_id', 'idPaciente');
+        return $this->hasMany(Odontograma::class, 'paciente_id', 'id');
     }
 }

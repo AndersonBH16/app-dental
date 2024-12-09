@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Odontograma;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 
 class OdontogramaController extends Controller
@@ -18,6 +19,26 @@ class OdontogramaController extends Controller
     public function canvas()
     {
         return view('odontograma.canvas');
+    }
+
+    public function display(Request $request)
+    {
+        return response()->file(storage_path("app/" . $request->path()));
+    }
+
+    public function data(Request $request)
+    {
+        $type = ($request->type == Odontograma::TYPE_EVOLUTION ? Odontograma::TYPE_EVOLUTION : Odontograma::TYPE_INITIAL);
+        $patient = Paciente::query()->where('dni', $request->dni)->first();
+        $odontogram = $patient->odontograms->where('type', $type)->first();
+        if (!$odontogram) {
+            $odontogram = $patient->odontograms()->create([
+                'type' => $type,
+                'date' => now(),
+                'payload' => Odontograma::generatePayload(),
+            ]);
+        }
+        return response()->json($odontogram);
     }
 
     /**
