@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\PacientesDataTable;
-use App\Models\Paciente;
+use App\Models\Odontograma;
 use Illuminate\Http\Request;
 
-class PacienteController extends Controller
+class OdontogramaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(PacientesDataTable $dataTables)
+    public function canvas()
     {
-        return $dataTables->render('pacientes.index');
-    }
-
-    public function odontograma(Request $request, Paciente $paciente){
-        return view('pacientes.odontograma', compact('paciente') + $request->only('type'));
+        return view('odontograma.canvas');
     }
 
     /**
@@ -39,7 +39,7 @@ class PacienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Paciente $paciente)
+    public function show(Odontograma $odontograma)
     {
         //
     }
@@ -47,7 +47,7 @@ class PacienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Paciente $paciente)
+    public function edit(Odontograma $odontograma)
     {
         //
     }
@@ -55,7 +55,7 @@ class PacienteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Paciente $paciente)
+    public function update(Request $request, Odontograma $odontograma)
     {
         //
     }
@@ -63,7 +63,7 @@ class PacienteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Paciente $paciente)
+    public function destroy(Odontograma $odontograma)
     {
         //
     }

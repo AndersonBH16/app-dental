@@ -29,15 +29,15 @@ class PacientesDataTable extends DataTable
                             Acciones <i class="mdi mdi-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="/pacientes/${value.dni}/odontograma?type=10">
+                            <a class="dropdown-item" href="/pacientes/'. $row["dni"] .'/odontograma?type=10">
                                 <i class="fa fa-h-square mr-2" style="color: darkcyan"></i>
                                 Odontograma Inicial
                             </a>
-                            <a class="dropdown-item" href="/pacientes/${value.dni}/odontograma?type=20">
+                            <a class="dropdown-item" href="/pacientes/'. $row["dni"] .'/odontograma?type=20">
                                 <i class="fa fa-h-square mr-2" style="color: darkcyan"></i>
                                 Odontograma Final
                             </a>
-                            <a class="dropdown-item" href="/historia-clinica/${value.dni}/ver-historial-clinico">
+                            <a class="dropdown-item" href="/historia-clinica/'. $row["dni"] .'/ver-historial-clinico">
                                 <i class="fa fa-eye mr-2" style="color: darkcyan"></i>
                                 Historial Médico
                             </a>

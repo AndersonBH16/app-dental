@@ -3,8 +3,10 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OdontogramaController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProductoController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,6 +15,12 @@ Route::get('/', function () {
 //    \App\Http\Middleware\DisablePreventBack::class,
 ]);
 
+Route::get('clean-cache', function (){
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+});
+
 Route::resources([
     'categorias' => CategoriaController::class,
     'productos' => ProductoController::class,
@@ -20,7 +28,6 @@ Route::resources([
 ]);
 
 Route::middleware([
-//    \App\Http\Middleware\DisablePreventBack::class,
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
@@ -32,3 +39,10 @@ Route::middleware([
     Route::get('/citas', [CitaController::class, 'index'])->name('ver-citas');
     Route::get('/ver-citas', [CitaController::class, 'getAllCitas']);
 });
+
+Route::get('/pacientes/{paciente:dni}/odontograma', [PacienteController::class, 'odontograma']);
+
+Route::get('/odontograma', [OdontogramaController::class, 'canvas']);
+Route::get('/odontogramas/{id}/{tooth}', [OdontogramaController::class, 'display']);
+Route::post('/odontograma', [OdontogramaController::class, 'data']);
+Route::put('/odontograma', [OdontogramaController::class, 'update']);
