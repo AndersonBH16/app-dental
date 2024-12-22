@@ -14,6 +14,8 @@ use Yajra\DataTables\Services\DataTable;
 
 class PacientesDataTable extends DataTable
 {
+    // php artisan datatables:make Pacientes
+
     /**
      * Build the DataTable class.
      *

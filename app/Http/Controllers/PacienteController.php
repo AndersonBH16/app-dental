@@ -11,9 +11,9 @@ class PacienteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(PacientesDataTable $dataTables)
+    public function index(PacientesDataTable $dataTable)
     {
-        return $dataTables->render('pacientes.index');
+        return $dataTable->render('pacientes.index');
     }
 
     public function odontograma(Request $request, Paciente $paciente){
