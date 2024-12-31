@@ -58,7 +58,7 @@ CMD ["php-fpm"]
 # Crear los directorios de almacenamiento y caché necesarios y asignar permisos
 RUN mkdir -p /var/www/storage \
     && mkdir -p /var/www/bootstrap/cache \
-    && chmod -R 775 /var/www/storage \
-    && chmod -R 775 /var/www/bootstrap/cache \
+    && chmod -R 777 /var/www/storage \
+    && chmod -R 777 /var/www/bootstrap/cache \
     && chown -R www-data:www-data /var/www/storage \
     && chown -R www-data:www-data /var/www/bootstrap/cache
