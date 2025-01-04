@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -10,7 +9,6 @@
                         <table id="productos-table" class="table table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Código</th>
                                 <th>Producto</th>
                                 <th>Descripcion</th>
@@ -22,7 +20,6 @@
                                 <th>Imagen</th>
                                 <th>Categoria</th>
                                 <th>Estado</th>
-                                <th>Acciones</th>
                             </tr>
                             </thead>
                         </table>
@@ -55,7 +52,6 @@
                 serverSide: true,
                 ajax: '/productos',
                 columns: [
-                    { data: 'id', name: 'id' },
                     { data: 'codigo', name: 'codigo' },
                     { data: 'nombre', name: 'nombre' },
                     { data: 'descripcion', name: 'descripcion' },
@@ -67,8 +63,6 @@
                     { data: 'imagen', name: 'imagen' },
                     { data: 'categoria_id', name: 'categoria_id' },
                     { data: 'estado', name: 'estado' },
-                    { data: 'created_at', name: 'created_at' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
                 responsive: true,
                 dom: 'Bfrtip',

@@ -43,7 +43,7 @@ class ProductosDataTable extends DataTable
                     ->setTableId('productos-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -53,6 +53,14 @@ class ProductosDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
+                    ])
+                    ->parameters([
+                        'responsive' => true,
+                        'autoWidth' => false,
+                        'hover' => true,
+                        'language' => [
+                            'url' => '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
+                        ],
                     ]);
     }
 
@@ -62,15 +70,10 @@ class ProductosDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
             Column::make('codigo'),
             Column::make('nombre'),
             Column::make('descripcion'),
+            Column::make('stock'),
             Column::make('precio'),
             Column::make('marca'),
             Column::make('modelo'),
@@ -78,8 +81,6 @@ class ProductosDataTable extends DataTable
             Column::make('imagen'),
             Column::make('categoria_id'),
             Column::make('estado'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

@@ -13,6 +13,10 @@ class ProductoController extends Controller
      */
     public function index(ProductosDataTable $dataTable)
     {
+//        $data = $dataTable->ajax()->getData(true);
+
+        // Mostrar el contenido de las celdas
+//        dd($data['data']); // 'data' contiene las filas del DataTable
         return $dataTable->render('productos.index');
     }
 

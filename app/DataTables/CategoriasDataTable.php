@@ -21,9 +21,7 @@ class CategoriasDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-            ->addColumn('action', 'categorias.action')
-            ->setRowId('id');
+        return (new EloquentDataTable($query));
     }
 
     /**
@@ -67,12 +65,9 @@ class CategoriasDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
             Column::make('nombre'),
             Column::make('descripcion'),
             Column::make('estado'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
