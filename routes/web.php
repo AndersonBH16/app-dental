@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\HistorialMedicoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OdontogramaController;
 use App\Http\Controllers\PacienteController;
@@ -25,6 +26,7 @@ Route::resources([
     'categorias' => CategoriaController::class,
     'productos' => ProductoController::class,
     'pacientes' => PacienteController::class,
+    'historial-medico' => HistorialMedicoController::class,
 ]);
 
 Route::middleware([
@@ -41,6 +43,7 @@ Route::middleware([
 });
 
 Route::get('/pacientes/{paciente:dni}/odontograma', [PacienteController::class, 'odontograma']);
+Route::get('/historia-clinica/{paciente:dni}/ver-historial-clinico', [HistorialMedicoController::class, 'index']);
 
 Route::get('/odontograma', [OdontogramaController::class, 'canvas']);
 Route::get('/odontogramas/{id}/{tooth}', [OdontogramaController::class, 'display']);
