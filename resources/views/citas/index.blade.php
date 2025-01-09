@@ -9,7 +9,7 @@
                     <h4 class="mb-sm-0">Agenda</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                             <li class="breadcrumb-item active">Agenda</li>
                         </ol>
                     </div>
@@ -29,32 +29,58 @@
     <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/core/main.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.css') }}" />
+    <style>
+        .fc-col-header-cell-cushion{
+            color: teal;
+        }
+
+        .fc-daygrid-day-number{
+            color: teal;
+        }
+
+        #calendar {
+            height: 700px;
+        }
+    </style>
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+{{--    <script src="{{ asset('assets/js/pages/calendar.init.js') }}"></script>--}}
+{{--    <script src="{{ asset('assets/libs/fullcalendar/index.global.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>--}}
 
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                // plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                locale: 'es',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,listDay'
+                },
+                buttonText: {
+                    today: 'Hoy',
+                    year: 'Año',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día',
+                    listWeek: 'Lista Semanal',
+                    listDay: 'Lista Diaria',
                 },
                 initialView: 'dayGridMonth',
-                editable: true, // Permitir mover eventos
-                selectable: true, // Permitir seleccionar fechas
-                events: 'ver-citas', // Endpoint para cargar eventos
+                editable: true,
+                selectable: true,
+                dayMaxEvents: true,
+                events: 'ver-citas',
+                eventColor: '#378006',
                 select: function (info) {
-                    // Crear un nuevo evento al seleccionar un rango
                     let title = prompt('Ingrese el título del evento:');
                     if (title) {
                         fetch('/ver-citas', {
@@ -75,7 +101,6 @@
                     }
                 },
                 eventClick: function (info) {
-                    // Mostrar información del evento al hacer clic
                     alert('Evento: ' + info.event.title);
                 }
             });
