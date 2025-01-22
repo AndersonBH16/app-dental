@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('historial_medico', function (Blueprint $table) {
             $table->id();
             $table->integer('ana_edad');
-            $table->enum('sexo', ['masculino', 'femenino']);
+            $table->enum('sexo', ['masculino', 'femenino', 'otro']);
             $table->string('ana_religion');
             $table->string('ana_lugar_nacimiento');
             $table->string('ana_telefono');
