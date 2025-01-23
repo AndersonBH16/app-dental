@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->integer('type')->default(Odontograma::TYPE_INITIAL);
             $table->dateTime('date');
-            $table->bigInteger('paciente_id');
+            $table->integer('paciente_id');
             $table->foreign('paciente_id')->references('id')
                 ->on('pacientes')
                 ->onDelete('cascade');
