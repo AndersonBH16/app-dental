@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -12,7 +13,8 @@ class CitaController extends Controller
      */
     public function index()
     {
-        return view('citas.index');
+        $pacientes = Paciente::all();
+        return view('citas.index', compact('pacientes'));
     }
 
     public function getAllCitas(){

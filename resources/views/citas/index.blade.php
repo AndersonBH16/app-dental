@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-lg">
                     <label class="form-label" for="titulo">Título</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingrese el título" required>
+                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Escriba algún nombre para la cita" required>
                 </div>
             </div>
             <div class="row mt-3">
@@ -49,8 +49,23 @@
                     <input type="time" class="form-control" id="horaInicio" name="horaInicio" required>
                 </div>
                 <div class="col-lg-4">
-                    <label class="form-label" for="horaFin">Hora Fin</label>
-                    <input type="time" class="form-control" id="horaFin" name="horaFin" required>
+                    <label class="form-label" for="horaFin">Duración</label>
+                    <select class="form-select" aria-label="Seleccionar Duración">
+                        <option value="30">30 minutos</option>
+                        <option value="60" selected>1 hora</option>
+                        <option value="90">1 hora y media</option>
+                        <option value="120">2 horas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="col-lg">
+                    <label class="form-label" for="descripcion">Paciente</label>
+                    <select class="form-select" aria-label="Seleccionar Paciente">
+                        @foreach($pacientes as $paciente)
+                            <option value="{{ $paciente->id }}" dt-dni="{{ $paciente->dni }}">{{ $paciente->nombre.' '.$paciente->apellido_paterno. " ".$paciente->apellido_materno }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </form>
