@@ -48,6 +48,7 @@ COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Establecer el directorio de trabajo
 WORKDIR /var/www
+RUN chown -R $user:$user /var/www
 
 # Exponer el puerto para PHP-FPM
 EXPOSE 9000
