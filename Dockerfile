@@ -44,7 +44,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && npm install -g npm
 
 # Configurar y habilitar Xdebug
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+#COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Establecer el directorio de trabajo
 WORKDIR /var/www
