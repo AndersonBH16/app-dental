@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('descripcion');
             $table->date('fecha');
-            $table->time('hora_inicio')->unique();
-            $table->time('hora_fin')->unique();
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
             $table->unsignedBigInteger('paciente_id');
             $table->enum('estado', ['pendiente', 'en proceso', 'terminado', 'cancelado'])->default('pendiente');
             $table->timestamps();
