@@ -26,7 +26,8 @@
 
     <!-- Modal para Crear/Editar Citas -->
     <x-cita-modal id="crearCitaModal" title="Crear Cita">
-        <form id="crearCitaForm">
+        <form id="crearCitaForm" method="POST">
+            @csrf
             <div class="row">
                 <div class="col-lg">
                     <label class="form-label" for="titulo">Título</label>
@@ -41,7 +42,7 @@
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label class="form-label" for="fecha">Fecha</label>
+                    <label class="form-label" for="fecha" disabled">Fecha</label>
                     <input type="date" class="form-control" id="fecha" name="fecha" required>
                 </div>
                 <div class="col-lg-4">
@@ -49,8 +50,8 @@
                     <input type="time" class="form-control" id="horaInicio" name="horaInicio" required>
                 </div>
                 <div class="col-lg-4">
-                    <label class="form-label" for="horaFin">Duración</label>
-                    <select class="form-select" aria-label="Seleccionar Duración">
+                    <label class="form-label" for="duracion">Duración</label>
+                    <select id="duracion" class="form-select" aria-label="Seleccionar Duración">
                         <option value="30">30 minutos</option>
                         <option value="60" selected>1 hora</option>
                         <option value="90">1 hora y media</option>
@@ -60,29 +61,32 @@
             </div>
             <div class="mt-3">
                 <div class="col-lg">
-                    <label class="form-label" for="descripcion">Paciente</label>
-                    <select class="form-select" aria-label="Seleccionar Paciente">
+                    <label class="form-label" for="paciente">Paciente</label>
+                    <select id="paciente" class="pacientes-select">
+                        <option></option>
                         @foreach($pacientes as $paciente)
-                            <option value="{{ $paciente->id }}" dt-dni="{{ $paciente->dni }}">{{ $paciente->nombre.' '.$paciente->apellido_paterno. " ".$paciente->apellido_materno }}</option>
+                            <option value="{{ $paciente->id }}" data-dni="{{ $paciente->dni }}">
+                                {{ $paciente->nombre.' '.$paciente->apellido_paterno.' '.$paciente->apellido_materno }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
             </div>
+            <x-slot name="footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" form="crearCitaForm">Guardar</button>
+            </x-slot>
         </form>
-
-        <x-slot name="footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary" form="crearCitaForm">Guardar</button>
-        </x-slot>
     </x-cita-modal>
-
-    {{--    @include('citas.modals.crear-cita')--}}
 @endsection
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/core/main.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/select2/css/select2.min.css') }}">
+
+
     <style>
         .fc-col-header-cell-cushion{
             color: teal;
@@ -95,20 +99,30 @@
         #calendar {
             height: 680px;
         }
+
+        .my-custom-event {
+            background-color: transparent !important;
+            border-color: transparent !important;
+        }
     </style>
 @endpush
 
 @push('scripts')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
-{{--    <script src="{{ asset('assets/js/pages/calendar.init.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/libs/fullcalendar/index.global.min.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/libs/@fullcalendar/core/main.min.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/libs/@fullcalendar/interaction/main.min.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/libs/@fullcalendar/daygrid/main.min.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/libs/@fullcalendar/timegrid/main.min.js') }}"></script>--}}
+    <script src="{{ asset('assets/libs/select2/js/select2.full.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            $('.pacientes-select').select2({
+                dropdownParent: $('#crearCitaModal'),
+                placeholder: "Seleccione un paciente",
+                allowClear: true,
+                width: '100%',
+                dropdownPosition: 'below',
+            });
+
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -121,41 +135,84 @@
                 initialView: 'dayGridMonth',
                 selectable: true,
                 events: '/ver-citas',
+                eventClassNames: function(event) {
+                    return ['my-custom-event'];
+                },
                 select: function (info) {
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
 
-                    document.getElementById('fecha').value = info.startStr;
+                    const selectedDate = info.start.toISOString().split('T')[0];
+                    const fechaInput = document.getElementById('fecha');
+                    fechaInput.value = selectedDate;
+                    fechaInput.setAttribute('disabled', true);
 
                     document.getElementById('crearCitaForm').onsubmit = function (e) {
                         e.preventDefault();
                         const data = {
-                            title: document.getElementById('titulo').value,
-                            description: document.getElementById('descripcion').value,
-                            start: `${document.getElementById('fecha').value}T${document.getElementById('horaInicio').value}`,
-                            end: `${document.getElementById('fecha').value}T${document.getElementById('horaFin').value}`,
+                            title       : document.getElementById('titulo').value,
+                            description : document.getElementById('descripcion').value,
+                            fecha       : selectedDate,
+                            hora_inicio : document.getElementById('horaInicio').value,
+                            duracion    : `${document.getElementById('duracion').value}`,
+                            paciente_id : document.getElementById('paciente').value
                         };
 
-                        fetch('/ver-citas', {
+                        console.log("data a enviar: ", data);
+
+                        fetch('/citas', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
                             body: JSON.stringify(data),
-                        }).then(response => response.json())
-                            .then(event => {
-                                calendar.addEvent(event);
-                                modal.hide();
-                            }).catch(err => console.error(err));
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Error al registrar la cita');
+                            return response.json();
+                        })
+                        .then(result => {
+                            modal.hide();
+                            calendar.refetchEvents();
+                            alert('Cita creada exitosamente.');
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert('Hubo un error al registrar la cita. Inténtalo de nuevo.');
+                        });
+
                     };
                 },
                 eventClick: function (info) {
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
 
+                    // Prellenar datos en el formulario para edición
                     document.getElementById('titulo').value = info.event.title;
-                    document.getElementById('descripcion').value = info.event.extendedProps.description;
+                    document.getElementById('descripcion').value = info.event.extendedProps.description || '';
                     document.getElementById('fecha').value = info.event.startStr.split('T')[0];
                     document.getElementById('horaInicio').value = info.event.startStr.split('T')[1];
-                    document.getElementById('horaFin').value = info.event.endStr.split('T')[1];
+                    document.getElementById('duracion').value = info.event.extendedProps.duracion || 60;
+                    $('#paciente').val(info.event.extendedProps.paciente_id).trigger('change');
+
+                    // Opcional: manejar la actualización de la cita aquí
+                },
+                eventContent: function(eventInfo) {
+                    const { paciente } = eventInfo.event.extendedProps;
+
+                    return {
+                        html: `
+                            <div class="custom-event bg-info rounded">
+                                <span class="event-time">
+                                    <i class="w-6 h-6 bg-green-500 rounded-full inline-block"></i>
+                                    ${eventInfo.timeText} - ${eventInfo.event.title}</span>
+                                <div class="event-extra">
+                                    <small>Paciente: ${paciente || "N/A"}</small>
+                                </div>
+                            </div>
+                        `
+                    };
                 }
             });
 

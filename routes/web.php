@@ -24,6 +24,7 @@ Route::get('clean-cache', function (){
 
 Route::resources([
     'categorias' => CategoriaController::class,
+    'citas' => CitaController::class,
     'productos' => ProductoController::class,
     'pacientes' => PacienteController::class,
     'historial-medico' => HistorialMedicoController::class,

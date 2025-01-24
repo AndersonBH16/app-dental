@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cita;
 use App\Models\Paciente;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -17,9 +18,23 @@ class CitaController extends Controller
         return view('citas.index', compact('pacientes'));
     }
 
-    public function getAllCitas(){
+    public function getAllCitas()
+    {
         $citas = Cita::all();
-        return $citas;
+
+        $eventos = $citas->map(function ($cita) {
+            return [
+                'id'          => $cita->id,
+                'title'       => $cita->titulo,
+                'start'       => "{$cita->fecha}T{$cita->hora_inicio}",
+                'end'         => "{$cita->fecha}T{$cita->hora_fin}",
+                'description' => $cita->descripcion,
+                'paciente_id' => $cita->paciente_id,
+                'paciente'    => $cita->paciente ? "{$cita->paciente->nombre} {$cita->paciente->apellido_paterno} {$cita->paciente->apellido_materno}" : null,
+            ];
+        });
+
+        return response()->json($eventos);
     }
 
     /**
@@ -35,7 +50,33 @@ class CitaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        $request->validate([
+//            'title'         => 'required|string|max:255',
+//            'description'   => 'nullable|string',
+//            'fecha'         => 'required|date',
+//            'hora_inicio'   => 'required|date_format:H:i',
+//            'duracion'      => 'required|integer',
+//            'paciente_id'   => 'required|exists:pacientes,id',
+//        ]);
+
+        try {
+            $duracion = (int) $request->duracion;
+            $horaFin = Carbon::parse($request->hora_inicio)->addMinutes($duracion)->format('H:i');
+
+            Cita::create([
+                'titulo'        => $request->title,
+                'descripcion'   => $request->description,
+                'fecha'         => $request->fecha,
+                'hora_inicio'   => $request->hora_inicio,
+                'hora_fin'      => $horaFin,
+                'paciente_id'   => $request->paciente_id,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Cita creada exitosamente']);
+        }catch (\Exception $e){
+            echo $e->getMessage();
+            return response()->json(['success' => false, 'message' => 'Error al crear la cita.'], 500);
+        }
     }
 
     /**
