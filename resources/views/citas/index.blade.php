@@ -74,7 +74,7 @@
             </div>
             <x-slot name="footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" form="crearCitaForm">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="guardarBtn" form="crearCitaForm">Guardar</button>
             </x-slot>
         </form>
     </x-cita-modal>
@@ -141,6 +141,8 @@
                 select: function (info) {
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
+                    document.getElementById('guardarBtn').textContent = "Guardar";
+                    document.getElementById('crearCitaModal').removeAttribute('inert');
 
                     const selectedDate = info.start.toISOString().split('T')[0];
                     const fechaInput = document.getElementById('fecha');
@@ -154,11 +156,9 @@
                             description : document.getElementById('descripcion').value,
                             fecha       : selectedDate,
                             hora_inicio : document.getElementById('horaInicio').value,
-                            duracion    : `${document.getElementById('duracion').value}`,
+                            duracion    : document.getElementById('duracion').value,
                             paciente_id : document.getElementById('paciente').value
                         };
-
-                        console.log("data a enviar: ", data);
 
                         fetch('/citas', {
                             method: 'POST',
@@ -168,35 +168,65 @@
                             },
                             body: JSON.stringify(data),
                         })
-                        .then(response => {
-                            if (!response.ok) throw new Error('Error al registrar la cita');
-                            return response.json();
-                        })
-                        .then(result => {
-                            modal.hide();
-                            calendar.refetchEvents();
-                            alert('Cita creada exitosamente.');
-                        })
-                        .catch(error => {
-                            console.error(error);
-                            alert('Hubo un error al registrar la cita. Inténtalo de nuevo.');
-                        });
-
+                            .then(response => response.json())
+                            .then(result => {
+                                modal.hide();
+                                calendar.refetchEvents();
+                                alert('Cita creada exitosamente.');
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                alert('Hubo un error al registrar la cita.');
+                            });
                     };
                 },
                 eventClick: function (info) {
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
 
-                    // Prellenar datos en el formulario para edición
+                    document.getElementById('guardarBtn').textContent = "Actualizar";
+                    document.getElementById('crearCitaModal').removeAttribute('inert');
+
                     document.getElementById('titulo').value = info.event.title;
                     document.getElementById('descripcion').value = info.event.extendedProps.description || '';
                     document.getElementById('fecha').value = info.event.startStr.split('T')[0];
-                    document.getElementById('horaInicio').value = info.event.startStr.split('T')[1];
+
+                    let horaInicio = info.event.startStr.split('T')[1].split(':').slice(0, 2).join(':');
+                    document.getElementById('horaInicio').value = horaInicio;
+
                     document.getElementById('duracion').value = info.event.extendedProps.duracion || 60;
                     $('#paciente').val(info.event.extendedProps.paciente_id).trigger('change');
 
-                    // Opcional: manejar la actualización de la cita aquí
+                    document.getElementById('crearCitaForm').onsubmit = function (e) {
+                        e.preventDefault();
+                        const data = {
+                            title       : document.getElementById('titulo').value,
+                            description : document.getElementById('descripcion').value,
+                            fecha       : document.getElementById('fecha').value,
+                            hora_inicio : document.getElementById('horaInicio').value,
+                            duracion    : document.getElementById('duracion').value,
+                            paciente_id : document.getElementById('paciente').value
+                        };
+
+                        fetch(`/citas/${info.event.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            body: JSON.stringify(data),
+                        })
+                            .then(response => response.json())
+                            .then(result => {
+                                modal.hide();
+                                calendar.refetchEvents();
+                                alert('Cita actualizada exitosamente.');
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                alert('Hubo un error al actualizar la cita.');
+                            });
+                    };
                 },
                 eventContent: function(eventInfo) {
                     const { paciente } = eventInfo.event.extendedProps;
