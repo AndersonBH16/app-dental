@@ -146,6 +146,7 @@
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
 
+                    document.getElementById('crearCitaModalLabel').textContent = "Crear Cita";
                     document.getElementById('guardarBtn').textContent = "Guardar";
                     document.getElementById('crearCitaForm').reset();
                     $('#paciente').val(null).trigger('change');
@@ -193,6 +194,7 @@
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
 
+                    document.getElementById('crearCitaModalLabel').textContent = "Actualizar Cita";
                     document.getElementById('guardarBtn').textContent = "Actualizar";
                     document.getElementById('titulo').value = info.event.title;
                     document.getElementById('descripcion').value = info.event.extendedProps.description || '';

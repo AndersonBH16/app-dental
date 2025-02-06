@@ -98,10 +98,38 @@ class CitaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cita $cita)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title'         => 'required|string|max:255',
+            'description'   => 'nullable|string',
+            'fecha'         => 'required|date',
+            'hora_inicio'   => 'required|date_format:H:i',
+            'duracion'      => 'required|integer',
+            'paciente_id'   => 'required|exists:pacientes,id',
+        ]);
+
+        try {
+            $cita = Cita::findOrFail($id);
+            $duracion = (int) $request->duracion;
+            $horaFin = Carbon::parse($request->hora_inicio)->addMinutes($duracion)->format('H:i');
+
+            $cita->update([
+                'titulo'        => $request->title,
+                'descripcion'   => $request->description,
+                'fecha'         => $request->fecha,
+                'hora_inicio'   => $request->hora_inicio,
+                'hora_fin'      => $horaFin,
+                'paciente_id'   => $request->paciente_id,
+            ]);
+
+            return response()->json(['message' => 'Cita actualizada exitosamente.'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Hubo un error al actualizar la cita.'], 500);
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
