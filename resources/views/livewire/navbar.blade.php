@@ -5,7 +5,7 @@
             <div class="navbar-brand-box">
                 <a href="/home" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo-sm" height="22">
+                        <img src="{{ asset('assets/images/unt_logo') }}" alt="logo-sm" height="22">
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('assets/images/logo-dark.png') }}" alt="logo-dark" height="20">
@@ -13,10 +13,10 @@
                 </a>
                 <a href="/home" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo-sm-light" height="22">
+                        <img src="{{ asset('assets/images/unt_logom.png') }}" alt="logo-sm-light" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('assets/images/logo-light.png') }}" alt="logo-light" height="20">
+                        <img src="{{ asset('assets/images/unt_logo.png') }}" alt="logo-light" height="60">
                     </span>
                 </a>
             </div>
@@ -64,10 +64,10 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="ri-user-line align-middle me-1"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle me-1"></i> My Wallet</a>
-                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock screen</a>
+                    <a class="dropdown-item" href="#"><i class="ri-user-line align-middle me-1"></i> Mi Perfil </a>
+{{--                    <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle me-1"></i> My Wallet</a>--}}
+{{--                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>--}}
+{{--                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock screen</a>--}}
                     <div class="dropdown-divider"></div>
                     <!-- Authentication -->
                     <form method="post" action="{{ route('logout') }}">

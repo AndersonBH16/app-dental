@@ -42,8 +42,8 @@
             </div>
             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label class="form-label" for="fecha" disabled">Fecha</label>
-                    <input type="date" class="form-control" id="fecha" name="fecha" required>
+                    <label class="form-label" for="fecha">Fecha</label>
+                    <input type="date" class="form-control" id="fecha" name="fecha" disabled>
                 </div>
                 <div class="col-lg-4">
                     <label class="form-label" for="horaInicio">Hora Inicio</label>
@@ -104,6 +104,10 @@
             background-color: transparent !important;
             border-color: transparent !important;
         }
+
+        .fc-event {
+            cursor: pointer !important;
+        }
     </style>
 @endpush
 
@@ -141,8 +145,10 @@
                 select: function (info) {
                     const modal = new bootstrap.Modal(document.getElementById('crearCitaModal'));
                     modal.show();
+
                     document.getElementById('guardarBtn').textContent = "Guardar";
-                    document.getElementById('crearCitaModal').removeAttribute('inert');
+                    document.getElementById('crearCitaForm').reset();
+                    $('#paciente').val(null).trigger('change');
 
                     const selectedDate = info.start.toISOString().split('T')[0];
                     const fechaInput = document.getElementById('fecha');
@@ -168,7 +174,10 @@
                             },
                             body: JSON.stringify(data),
                         })
-                            .then(response => response.json())
+                            .then(response => {
+                                if (!response.ok) throw new Error('Error al registrar la cita');
+                                return response.json();
+                            })
                             .then(result => {
                                 modal.hide();
                                 calendar.refetchEvents();
@@ -176,7 +185,7 @@
                             })
                             .catch(error => {
                                 console.error(error);
-                                alert('Hubo un error al registrar la cita.');
+                                alert('Hubo un error al registrar la cita. Inténtalo de nuevo.');
                             });
                     };
                 },
@@ -185,8 +194,6 @@
                     modal.show();
 
                     document.getElementById('guardarBtn').textContent = "Actualizar";
-                    document.getElementById('crearCitaModal').removeAttribute('inert');
-
                     document.getElementById('titulo').value = info.event.title;
                     document.getElementById('descripcion').value = info.event.extendedProps.description || '';
                     document.getElementById('fecha').value = info.event.startStr.split('T')[0];
@@ -233,16 +240,32 @@
 
                     return {
                         html: `
-                            <div class="custom-event bg-info rounded">
-                                <span class="event-time">
-                                    <i class="w-6 h-6 bg-green-500 rounded-full inline-block"></i>
-                                    ${eventInfo.timeText} - ${eventInfo.event.title}</span>
-                                <div class="event-extra">
-                                    <small>Paciente: ${paciente || "N/A"}</small>
+                            <div class="custom-event bg-info rounded shadow-lg w-full d-flex flex-column align-items-start p-2">
+                                <span class="event-time text-sm text-gray-700">
+                                    <span><b>${formatTime(eventInfo.timeText)}</b> - ${eventInfo.event.title}</span>
+                                </span>
+                                <div class="event-extra text-sm text-gray-500">
+                                    <span>Paciente: ${paciente || "N/A"}</span>
                                 </div>
                             </div>
                         `
                     };
+
+                    function formatTime(timeText) {
+                        const [hours, minutes] = timeText.split(':').map(Number);
+                        const date = new Date();
+                        date.setHours(hours);
+                        date.setMinutes(minutes);
+
+                        const options = {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        };
+
+                        return date.toLocaleTimeString([], options);
+                    }
+
                 }
             });
 
