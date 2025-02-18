@@ -24,10 +24,10 @@
                         <div class="card-body">
                             <div class="card-body">
                                 <form>
-                                    <textarea id="diag_pres" class="form-control" placeholder="Escribir detalle" rows="5"></textarea>
+                                    <textarea id="diag_pres" class="form-control w-full" placeholder="Escribir detalle" rows="5"></textarea>
                                     <hr>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                    <div class="flex justify-end">
+                                        <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                             <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                         </button>
                                     </div>
@@ -39,6 +39,7 @@
             </div>
 
             @include('historial-medico.iv_pruebas_complementarias')
+
             <div id="accordion" class="custom-accordion">
                 <div class="card mb-1 shadow-none">
                     <a href="#collapseFive" class="text-dark collapsed" data-bs-toggle="collapse"
@@ -55,10 +56,10 @@
                          aria-labelledby="headingFive" data-bs-parent="#accordion">
                         <div class="card-body">
                             <form>
-                                <textarea id="diagnostico_def" class="form-control" placeholder="Escribir pronóstico" rows="5"></textarea>
+                                <textarea id="diagnostico_def" class="form-control w-full" placeholder="Escribir pronóstico" rows="5"></textarea>
                                 <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                <div class="flex justify-end">
+                                    <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                         <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                     </button>
                                 </div>
@@ -84,10 +85,10 @@
                          aria-labelledby="headingPronostico" data-bs-parent="#accordion">
                         <div class="card-body">
                             <form>
-                                <textarea id="pronostico" class="form-control" placeholder="Escribir detalle" rows="5"></textarea>
+                                <textarea id="pronostico" class="form-control w-full" placeholder="Escribir detalle" rows="5"></textarea>
                                 <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                <div class="flex justify-end">
+                                    <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                         <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                     </button>
                                 </div>
@@ -113,10 +114,10 @@
                          aria-labelledby="headingSeven" data-bs-parent="#accordion">
                         <div class="card-body">
                             <form>
-                                <textarea id="presupuesto" class="form-control" placeholder="Escribir detalle" rows="5"></textarea>
+                                <textarea id="presupuesto" class="form-control w-full" placeholder="Escribir detalle" rows="5"></textarea>
                                 <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                <div class="flex justify-end">
+                                    <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                         <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                     </button>
                                 </div>
@@ -142,10 +143,10 @@
                          aria-labelledby="headingTratamientoRecomendaciones" data-bs-parent="#accordion">
                         <div class="card-body">
                             <form>
-                                <textarea id="plan_tratamiento_recomendaciones" class="form-control" placeholder="Escribir detalle" rows="5"></textarea>
+                                <textarea id="plan_tratamiento_recomendaciones" class="form-control w-full" placeholder="Escribir detalle" rows="5"></textarea>
                                 <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                <div class="flex justify-end">
+                                    <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                         <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                     </button>
                                 </div>
@@ -171,10 +172,10 @@
                          aria-labelledby="headingTratamientosRealizados" data-bs-parent="#accordion">
                         <div class="card-body">
                             <form>
-                                <textarea id="control_evol" class="form-control" placeholder="Detallar" rows="5"></textarea>
+                                <textarea id="control_evol" class="form-control w-full" placeholder="Detallar" rows="5"></textarea>
                                 <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                <div class="flex justify-end">
+                                    <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                         <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                     </button>
                                 </div>
@@ -200,10 +201,10 @@
                          aria-labelledby="headingControlEvaluacion" data-bs-parent="#accordion">
                         <div class="card-body">
                             <form>
-                                <textarea id="control_evol" class="form-control" placeholder="Detallar" rows="5"></textarea>
+                                <textarea id="control_evol" class="form-control w-full" placeholder="Detallar" rows="5"></textarea>
                                 <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-info w-lg waves-effect waves-light">
+                                <div class="flex justify-end">
+                                    <button type="button" class="btn btn-info w-auto sm:w-lg waves-effect waves-light">
                                         <i class="fa fa-save"></i>&nbsp;&nbsp;Grabar
                                     </button>
                                 </div>
