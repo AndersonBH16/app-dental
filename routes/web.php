@@ -47,6 +47,6 @@ Route::get('/pacientes/{paciente:dni}/odontograma', [PacienteController::class, 
 Route::get('/historia-clinica/{paciente:dni}/ver-historial-clinico', [HistorialMedicoController::class, 'index']);
 
 Route::get('/odontograma', [OdontogramaController::class, 'canvas']);
-Route::get('/odontogramas/{id}/{tooth}', [OdontogramaController::class, 'display']);
+Route::get('/odontograma/{id}/{tooth}', [OdontogramaController::class, 'display']);
 Route::post('/odontograma', [OdontogramaController::class, 'data']);
 Route::put('/odontograma', [OdontogramaController::class, 'update']);

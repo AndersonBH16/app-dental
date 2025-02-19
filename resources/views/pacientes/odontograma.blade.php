@@ -21,6 +21,7 @@
             <h5 class="card-header">Odontograma {{ $type == \App\Models\Odontograma::TYPE_INITIAL ? "Inicial" : "Final" }}: {{ $paciente->fullname() }}</h5>
             <div class="card-body">
                 <iframe width="100%" height="860" src="{{ url('/odontograma') }}?dni={{ $paciente->dni }}&type={{ $type }}"></iframe>
+{{--                <iframe width="100%" height="860" src="{{ env('APP_ODONTOGRAMA') }}?dni={{ $paciente->dni }}&type={{ $type }}"></iframe>--}}
             </div>
         </div>
     </div>

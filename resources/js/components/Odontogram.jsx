@@ -30,10 +30,11 @@ export function Odontogram() {
     const [open, setOpen] = React.useState(false);
     const findings = React.useRef({});
     const modifying = React.useRef({});
+    const url = new URL(location.href);
+    const dni = url.searchParams.get('dni');
 
     React.useEffect(() => {
-        const url = new URL(location.href);
-        post(PATHS.ODONTOGRAM, {dni: url.searchParams.get('dni'), type: url.searchParams.get('type')}).then(data => {
+        post(PATHS.ODONTOGRAM, {dni: dni, type: url.searchParams.get('type')}).then(data => {
             setFindings(data);
             setData(data);
         })
@@ -89,6 +90,7 @@ export function Odontogram() {
     return (
         <Box component={"form"} onSubmit={handleSubmit} style={{width: '100%'}}>
             <input type="hidden" name={"id"} defaultValue={data.id}/>
+            <input type="hidden" name={"dni"} defaultValue={dni}/>
             <SuccessAlert
                 open={open}
                 onClose={() => {setOpen(false)}}

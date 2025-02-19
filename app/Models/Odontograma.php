@@ -90,6 +90,6 @@ class Odontograma extends Model
     public function routeTooth($tooth)
     {
         if (empty($tooth['canvasPaths'])) return null;
-        return "odontograms/$this->id/" . $tooth['number'] . ".png";
+        return "odontograma/$this->id/" . $tooth['number'] . ".png";
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Odontograma;
 use App\Models\Paciente;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OdontogramaController extends Controller
 {
@@ -78,7 +80,31 @@ class OdontogramaController extends Controller
      */
     public function update(Request $request, Odontograma $odontograma)
     {
-        //
+        $time = time();
+        $odontogram = Odontograma::query()->findOrFail($request->id);
+        $payload = $odontogram->payload;
+        $payload = collect($payload)->map(function ($item) use ($odontogram, $time, $request) {
+            $item['findingText'] = $request->findings[$item['number']] ?? null;
+
+            if (!isset($request->types[$item['number']])) return $item;
+
+            $item['findingTypes'] = json_decode($request->types[$item['number']]);
+            if ($request->paths && isset($request->paths[$item['number']]))
+                $item['canvasPaths'] = json_decode($request->paths[$item['number']]);
+            if (isset($request->images[$item['number']])) {
+                if (($url = $odontogram->routeTooth($item)))
+                    Storage::disk()->put($url, file_get_contents($request->images[$item['number']]));
+            }
+            else $url = null;
+            $item['url'] = $url ? "$url?t=$time" : null;
+            return $item;
+        });
+        $odontogram->update(compact('payload') + [
+                'observations' => $request->observations ?? '',
+                'specifications' => $request->specifications ?? '',
+                'date' => Carbon::parse($request->date),
+            ]);
+        return response()->json($odontogram);
     }
 
     /**
